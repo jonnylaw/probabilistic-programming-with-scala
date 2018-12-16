@@ -385,7 +385,7 @@ implicit def numericInt = new Numeric[Int] { ... }
 
 #+ATTR_REVEAL: :frag (appear)
    * A functor is a mapping between categories which preserves structure
-   * $\mathcal{C}$ and $\mathcal{D}$ are categories, then a \emph{functor} $F:\mathcal{C} \rightarrow \mathcal{D}$: 
+   * $\mathcal{C}$ and $\mathcal{D}$ are categories, then a functor $F:\mathcal{C} \rightarrow \mathcal{D}$: 
      * Associates $X \in \mathcal{C}$ to an object $F(X) \in \mathcal{D}$
      * And each morphism, $f:X \rightarrow Y$ in $\mathcal{C}$ to a morphism in
        $\mathcal{D}$, $F(f): F(X) \rightarrow F(Y)$. 
@@ -395,31 +395,66 @@ implicit def numericInt = new Numeric[Int] { ... }
 
 ** Natural Transformation
 
-   * A functor is a morphism between two categories (which itself has morphisms
-between its objects)
-   * A natural transformation is a morphism between functors
-   * $F, G: \mathcal{C} \rightarrow \mathcal{D}$ are functors, then a natural transformation $\alpha: F(X) \Rightarrow G(X)$
-is a family of morphisms such that:
+#+ATTR_REVEAL: :frag (appear)
+   * A functor is a morphism between two categories, a natural transformation is a morphism between functors
+   * $X \in \mathcal{C}$, $F, G: \mathcal{C} \rightarrow \mathcal{D}$ are functors, then a natural
+     transformation $\alpha: F(X) \Rightarrow G(X)$ is a family of morphisms such that:
        * $\forall X \in \mathcal{C}$ then $\alpha_X: F(X) \rightarrow G(X)$ is a
          morphism in $\mathcal{D}$ 
        * for each  $f \in \mathcal{C}$ then $\alpha_Y \circ F(f) = G(f) \circ \alpha_X$.
 
-** Natural Transformation
+*** Natural Transformation
 
-#+CAPTION: This is the caption for the next figure link (or table)
-#+NAME:   fig:figures/tikz/natural_transformation
-[[./figures/natural_transformation.pdf]]
+ #+CAPTION: Commutative diagram for the natural transformation laws
+ #+NAME:   fig:figures/tikz/natural_transformation
+ [[./figures/natural_transformation.png]]
 
 ** Monads
 
+   * A monad is an endofunctor, $T: \mathcal{C} \rightarrow \mathcal{C}$ with
+     two natural transformations
+      * $\eta: \textrm{Id}_{\mathcal{c}} \rightarrow T$
+      * $\mu: T \circ T \rightarrow T$
+   * Such that $\mu \circ T \mu = \mu \circ \mu T$
+   * and $\mu \circ T\eta = \mu \circ \eta T = \textrm{Id}_T$
+
+*** Monads 
+
+ #+CAPTION: Commutative diagrams for the monad laws
+ #+LABEL: mylabel
+ #+ATTR_LATEX: width=5cm
+ | [[./figures/monad_laws.png]] | [[./figures/monad_law_2.png]] |
 
 ** Why?
 #+ATTR_REVEAL: :frag (appear)
-   * Types and functions form a category, called `Hask`, every functor is hence
-     an endofunctor, $F: \textrm{Hask} \rightarrow \textrm{Hask}$
+   * Types and functions form a category, called =Hask=, every functor is hence
+     an endofunctor, $F: \texttt{Hask} \rightarrow \texttt{Hask}$
    * Principled abstractions for functional programming
    * Testing mathematical laws instead of individual functions
    * Verifying the correctness of programs
+
+*** Distribution is a Monad
+
+    * A monad provides a context for an effect
+    * Can preserve immutability be encapsulating random draws in a monad
+      =Rand[A]= representing a distribution over the type =A=
+    * Unit is the dirac distribution
+    * =flatMap= represents a joint or marginal distribution
+
+#+BEGIN_SRC scala
+def coinFlip(n: Int): Rand[Int] = Beta(3, 3).flatMap(p => Binomial(n, p))
+#+END_SRC
+
+*** Syntactic Sugar
+
+    * For comprehension provides is syntactic sugar for chains of =flatMap= and
+      =map=
+
+#+BEGIN_SRC scala
+def coinFlip(n: Int): Rand[Int] = for {
+  p <- Beta(3, 3)
+} yield Binomial(n, p)
+#+END_SRC
 
 * Automatic Differentiation
 
@@ -430,7 +465,7 @@ is a family of morphisms such that:
    * Not symbolic differentiation
    * Not numeric differentiation
 
-** Forward Model AD
+** Forward Mode AD
 
 #+ATTR_REVEAL: :frag (appear)
    * Consider the function $f(x) = x^2 + 2x + 5$ with derivative $f^\prime(x) =
@@ -451,29 +486,110 @@ is a family of morphisms such that:
    * Number of computations depends on the dimension of the input space, ie. the
      dimension of the parameters
 
+** Implementation
+
+   * Create a new class representing a dual number:
+
+#+BEGIN_SRC scala
+case class Dual(real: Double, eps: Double)
+#+END_SRC
+
+   * Define an instance of the =Numeric[Dual]= typeclass
+
+*** Dual Operators
+
+#+BEGIN_SRC scala
+def plus(x: Dual, y: Dual) =
+  Dual(x.real + y.real, x.eps + y.eps)
+def minus(x: Dual, y: Dual): Dual =
+  Dual(y.real - x.real, y.eps - x.eps)
+def times(x: Dual, y: Dual) =
+  Dual(x.real * y.real, x.eps * y.real + y.eps * x.real)
+def div(x: Dual, y: Dual) =
+  Dual(x.real / y.real, 
+  (x.eps * y.real - x.real * y.eps) / (y.real * y.real))
+#+END_SRC
+
+*** Dual Usage
+
+#+BEGIN_SRC scala
+def logPos(ys: Vector[Double])(mu: Dual) = 
+  (-0.5 * 0.125 * mu * mu) - 0.125 * ys.
+    map(_ - mu).
+    map(x => x * x).
+    reduce(_ + _)
+#+END_SRC
+
+*** Extension to Gradients
+
+    * Define a new Dual class
+
+#+BEGIN_SRC scala
+case class DualV(real: Double, dual: Vector[Double])
+#+END_SRC
+
+    * The =dual= argument can be confused between variables, each variable in a
+      computation must have the same dimension =dual=
+
+** Reverse Mode AD
+
+   * Reverse mode AD scales in the dimension of the output space
+   * Faster than forward mode for $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$
+     when $n > m$
+
 * Putting it all together
+
+** Building our own PPL
+
+   * Embedded DSL for model building using Monads
+   * Fast generic inference schemes for sampling from posterior distributions
+   * Automatic differentiation for gradient based samplers
 
 ** Linear Regression
 
-#+BEGIN_SRC Scala
-val model = for {
-  b0 <- Normal(0.0, 5.0).param
-  b1 <- Normal(0.0, 5.0).param
-  b2 <- Normal(0.0, 5.0).param
-  sigma <- Gamma(2.0, 2.0).param
-  _ <- Predictor.fromDoubleVector { xs =>
-    {
-      val mean = b0 + b1 * xs.head + b2 * xs(1)
-      Normal(mean, sigma)
-    }
-  }
-  .fit(x zip y)
-} yield Map("b0" -> b0, "b1" -> b1, "b2" -> b2, "sigma" -> sigma) 
-#+END_SRC
+\begin{equation}
+y_i = \beta^T x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,
+\sigma).
+\end{equation}
+
+*** Linear Regression
+
+ #+BEGIN_SRC Scala
+ val model = for {
+   b0 <- Normal(0.0, 5.0).param
+   b1 <- Normal(0.0, 5.0).param
+   b2 <- Normal(0.0, 5.0).param
+   sigma <- Gamma(2.0, 2.0).param
+   _ <- Predictor.fromDoubleVector { xs =>
+     {
+       val mean = b0 + b1 * xs.head + b2 * xs(1)
+       Normal(mean, sigma)
+     }
+   }
+   .fit(x zip y)
+ } yield Map("b0" -> b0, "b1" -> b1, "b2" -> b2, "sigma" -> sigma) 
+
+ model.sample(EHMC(10), 5000, 10000 * 20, 20)
+ #+END_SRC
+
+*** Linear Regression
+
+ #+CAPTION: Diagnostic plots for simulated data from the linear regression model
+ #+LABEL: mylabel
+ [[./figures/ehmc_lm.png]]
 
 ** Stochastic Volatility
 
-#+BEGIN_SRC Scala
+   * A heteroskedastic time series with latent log-volatility $\alpha_t$
+
+\begin{align}
+y_t &= \sigma_t\exp\left(\frac{\alpha_t}{2}\right), &\sigma_t &\sim \mathcal{N}(0, 1), \\
+\textrm{d}\alpha_t &= \phi(\alpha_t - \mu)\textrm{d}t + \sigma \textrm{d}W_t.
+\end{align}
+
+*** Stochastic Volatility
+
+#+BEGIN_SRC scala
 val prior = for {
   phi1 <- Beta(5.0, 2.0).param
   phi = 2 * phi1 - 1
@@ -488,7 +604,11 @@ def ouStep(phi: Real, mu: Real, sigma: Real, x0: Real, dt: Double) = {
   val variance = sigma.pow(2) * (1 - (-2 * phi * dt).exp) / (2*phi)
   Normal(mean, variance.pow(0.5))
 }
+#+END_SRC
 
+*** Stochastic Volatility
+
+#+BEGIN_SRC scala
 def step(st: RandomVariable[(Double, Real, Real, Real, Real)],
          y: (Double, Double)) = for {
     (t, phi, mu, sigma, x0) <- st
@@ -502,3 +622,39 @@ val fullModel = ys.foldLeft(prior)(step)
 #+END_SRC
 
 ** Mixture Model
+
+   * Data is assumed to come from one of $k$ distributions
+
+\begin{align*}
+  y_i &\sim \mathcal{N}(\mu_k, \sigma), \\
+  k &\sim \mathcal{F}(\theta).
+\end{align*}
+
+*** Mixture Model
+
+#+BEGIN_SRC scala
+val model = for {
+  theta1 <- Beta(2.0, 5.0).param
+  theta2 <- Beta(2.0, 5.0).param
+  alphas = Seq(theta1.log, theta2.log, Real.zero)
+  thetas = softmax(alphas)
+  mu1 <- Normal(0.0, 5.0).param
+  mu2 <- Normal(0.0, 5.0).param
+  mu3 <- Normal(0.0, 5.0).param
+  mus = Seq(mu1, mu2, mu3)
+  sigma <- Gamma(2.0, 10.0).param
+  components: Map[Continuous, Real] = mus.zip(thetas).map {
+    case (m: Real, t: Real) => (Normal(m, sigma) -> t) }.toMap
+  _ <- Mixture(components).fit(ys)
+} yield Map("theta1" -> thetas.head, "theta2" -> thetas(1),
+              "theta3" -> thetas(2),
+                "mu1" -> mu1, "mu2" -> mu2, "mu3" -> mu3, "sigma" -> sigma)
+
+#+END_SRC
+
+* Conclusion
+
+  * Probabilistic programming languages can be used to quickly
+    prototype new models without implementing and testing new inference schemes
+  * Embedded PPLs can be deployed in production code without rewriting -
+    reducing bugs and enabling faster inference in industrial settings

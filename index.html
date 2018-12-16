@@ -27,38 +27,39 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition=""><h1 class="title">Probabilistic Programming in Scala</h1><h2 class="author">Jonny Law</h2><h2 class="date">2018-12-15 Sat 00:00</h2><p class="date">Created: 2018-12-16 Sun 09:24</p>
+<section id="sec-title-slide" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition=""><h1 class="title">Probabilistic Programming in Scala</h1><h2 class="author">Jonny Law</h2><h2 class="date">2018-12-15 Sat 00:00</h2><p class="date">Created: 2018-12-16 Sun 14:26</p>
 </section>
 <section id="table-of-contents">
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#/slide-orga7cb55c">1. Introduction to Bayesian Inference</a></li>
-<li><a href="#/slide-org7196eec">2. Probabilistic Programming</a></li>
-<li><a href="#/slide-org38e56b3">3. Statistical Computation</a></li>
-<li><a href="#/slide-orgeef4676">4. Functional Programming</a></li>
-<li><a href="#/slide-org5022abc">5. Category Theory</a></li>
-<li><a href="#/slide-org16cb0e4">6. Automatic Differentiation</a></li>
-<li><a href="#/slide-org067bbf5">7. Putting it all together</a></li>
+<li><a href="#/slide-org2f56490">1. Introduction to Bayesian Inference</a></li>
+<li><a href="#/slide-org4ad3675">2. Probabilistic Programming</a></li>
+<li><a href="#/slide-org4153d94">3. Statistical Computation</a></li>
+<li><a href="#/slide-orgacc4de7">4. Functional Programming</a></li>
+<li><a href="#/slide-orgf83b69c">5. Category Theory</a></li>
+<li><a href="#/slide-org267af4d">6. Automatic Differentiation</a></li>
+<li><a href="#/slide-org88c7497">7. Putting it all together</a></li>
+<li><a href="#/slide-orgd0e7bec">8. Conclusion</a></li>
 </ul>
 </div>
 </div>
 </section>
 
 <section>
-<section id="slide-orga7cb55c" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org2f56490" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h2 id="orga7cb55c"><span class="section-number-2">1</span> Introduction to Bayesian Inference</h2>
+<h2 id="org2f56490"><span class="section-number-2">1</span> Introduction to Bayesian Inference</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orgd800775" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org74c13bb" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgd800775"><span class="section-number-3">1.1</span> Bayesian Statistics</h3>
+<h3 id="org74c13bb"><span class="section-number-3">1.1</span> Bayesian Statistics</h3>
 <ul>
 <li>Bayesian statistics is concerned with expressing uncertainty using probability</li>
 <li>Provides a framework for subjective beliefs and updating - reflecting how
@@ -70,9 +71,9 @@ people reason in real life</li>
 </section>
 </section>
 <section>
-<section id="slide-org8a37edd" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org757cccb" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org8a37edd"><span class="section-number-3">1.2</span> Bayes Theorem</h3>
+<h3 id="org757cccb"><span class="section-number-3">1.2</span> Bayes Theorem</h3>
 <ul>
 <li>Bayes theorem allows us to determine the probability of a hypothesis being
 true by collecting data related to the hypothesis</li>
@@ -87,9 +88,9 @@ true by collecting data related to the hypothesis</li>
 </section>
 </section>
 <section>
-<section id="slide-org1fa1902" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgab2201d" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org1fa1902"><span class="section-number-3">1.3</span> Finding the integral</h3>
+<h3 id="orgab2201d"><span class="section-number-3">1.3</span> Finding the integral</h3>
 <ul>
 <li>The denominator of Bayes theorem is often intractable</li>
 <li>Sampling based inference methods can be used to approximate the posterior
@@ -101,18 +102,18 @@ distribution</li>
 </section>
 </section>
 <section>
-<section id="slide-org7196eec" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org4ad3675" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h2 id="org7196eec"><span class="section-number-2">2</span> Probabilistic Programming</h2>
+<h2 id="org4ad3675"><span class="section-number-2">2</span> Probabilistic Programming</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-org9c2d92a" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org71f6377" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org9c2d92a"><span class="section-number-3">2.1</span> What is Probabilistic Programming?</h3>
+<h3 id="org71f6377"><span class="section-number-3">2.1</span> What is Probabilistic Programming?</h3>
 <ul>
 <li class="fragment appear">Efficiently expressing Bayesian statistical models and performing inference</li>
 <li class="fragment appear">Provide a consistent, flexible modelling language for specifying prior
@@ -125,9 +126,9 @@ beliefs and likelihooods</li>
 </section>
 </section>
 <section>
-<section id="slide-orga316f52" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgdd9a60c" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orga316f52"><span class="section-number-3">2.2</span> Examples of PPLs</h3>
+<h3 id="orgdd9a60c"><span class="section-number-3">2.2</span> Examples of PPLs</h3>
 <ul>
 <li class="fragment appear">Stan <a href="http://mc-stan.org/">http://mc-stan.org/</a></li>
 <li class="fragment appear">BUGS <a href="https://www.mrc-bsu.cam.ac.uk/software/bugs/">https://www.mrc-bsu.cam.ac.uk/software/bugs/</a></li>
@@ -143,9 +144,9 @@ beliefs and likelihooods</li>
 </section>
 </section>
 <section>
-<section id="slide-org919fba6" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org41dc859" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org919fba6"><span class="section-number-3">2.3</span> Why?</h3>
+<h3 id="org41dc859"><span class="section-number-3">2.3</span> Why?</h3>
 <ul>
 <li class="fragment appear">Small data</li>
 <li class="fragment appear">Transparent, interpretable models</li>
@@ -157,18 +158,18 @@ beliefs and likelihooods</li>
 </section>
 </section>
 <section>
-<section id="slide-org38e56b3" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org4153d94" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h2 id="org38e56b3"><span class="section-number-2">3</span> Statistical Computation</h2>
+<h2 id="org4153d94"><span class="section-number-2">3</span> Statistical Computation</h2>
 <div class="outline-text-2" id="text-3">
 </div>
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-org2fc321f" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org73aa53b" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org2fc321f"><span class="section-number-3">3.1</span> Conjugacy</h3>
+<h3 id="org73aa53b"><span class="section-number-3">3.1</span> Conjugacy</h3>
 <ul>
 <li class="fragment appear">The prior distribution is the same distribution as the posterior
 distribution and can be derived analytically</li>
@@ -180,9 +181,9 @@ distribution and can be derived analytically</li>
 </section>
 </section>
 <section>
-<section id="slide-org0059eff" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org0a4fb3b" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org0059eff"><span class="section-number-3">3.2</span> Gibbs Sampling</h3>
+<h3 id="org0a4fb3b"><span class="section-number-3">3.2</span> Gibbs Sampling</h3>
 <ul>
 <li class="fragment appear">Markov chain Monte Carlo (MCMC) method which exploits conditional probability to derive conditionally conjugate distributions</li>
 <li class="fragment appear">Sample from each conditional conjugate distribution in turn to create a
@@ -195,9 +196,9 @@ Markov chain representing draws from the full posterior distribution</li>
 </section>
 </section>
 <section>
-<section id="slide-orga4372a8" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org28f7d5e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orga4372a8"><span class="section-number-3">3.3</span> Metropolis-Hastings</h3>
+<h3 id="org28f7d5e"><span class="section-number-3">3.3</span> Metropolis-Hastings</h3>
 <ul>
 <li class="fragment appear">General MCMC method with no restriction on prior distributions</li>
 <li class="fragment appear">New parameters are proposed from some proposal distribution, \(\psi^\star
@@ -214,9 +215,9 @@ Metropolis-Hastings ratio
 </section>
 </section>
 <section>
-<section id="slide-org99d0c91" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgcf2f6a2" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org99d0c91"><span class="section-number-3">3.4</span> Metropolis-Hastings</h3>
+<h3 id="orgcf2f6a2"><span class="section-number-3">3.4</span> Metropolis-Hastings</h3>
 <div class="org-src-container">
 
 <pre><code class="Scala" >def mhStep[P](posterior: P =&gt; Double, 
@@ -236,9 +237,9 @@ Metropolis-Hastings ratio
 </section>
 </section>
 <section>
-<section id="slide-org14ca5cc" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgc1dbba2" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org14ca5cc"><span class="section-number-3">3.5</span> Metropolis-Hastings</h3>
+<h3 id="orgc1dbba2"><span class="section-number-3">3.5</span> Metropolis-Hastings</h3>
 <ul>
 <li class="fragment appear">Metropolis-Hastings is simple to implement and guaranteed to converge if
 it's left long enough - but no one wants to wait forever</li>
@@ -255,9 +256,9 @@ default choice
 </section>
 </section>
 <section>
-<section id="slide-orgf95b41a" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org29466be" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgf95b41a"><span class="section-number-3">3.6</span> Hamiltonian Monte Carlo</h3>
+<h3 id="org29466be"><span class="section-number-3">3.6</span> Hamiltonian Monte Carlo</h3>
 <ul>
 <li class="fragment appear">Can we use gradient information from the un-normalised log posterior?</li>
 <li class="fragment appear"><p>
@@ -279,9 +280,9 @@ Improved proposal based on Hamilton's Equations:
 </section>
 </section>
 <section>
-<section id="slide-orgd3e7fa7" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org99ad1dd" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgd3e7fa7"><span class="section-number-3">3.7</span> Hamiltonian Monte Carlo</h3>
+<h3 id="org99ad1dd"><span class="section-number-3">3.7</span> Hamiltonian Monte Carlo</h3>
 <ul>
 <li class="fragment appear">The static parameters correspond to the position in Hamilton's equations,
 the momentum is an auxiliary parameter</li>
@@ -295,9 +296,9 @@ the momentum is an auxiliary parameter</li>
 </section>
 </section>
 <section>
-<section id="slide-orgfa2dd89" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org3162123" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgfa2dd89"><span class="section-number-3">3.8</span> The Leapfrog step</h3>
+<h3 id="org3162123"><span class="section-number-3">3.8</span> The Leapfrog step</h3>
 <div>
 \begin{align*}
   \phi_{t+\varepsilon/2} &= \phi_{t-1} + \frac{\varepsilon}{2} \nabla_\psi\log p(y|\psi_{t-1}), \\
@@ -311,9 +312,9 @@ the momentum is an auxiliary parameter</li>
 </section>
 </section>
 <section>
-<section id="slide-orgbb71cc5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org774cf0e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgbb71cc5"><span class="section-number-3">3.9</span> Hamiltonian Monte Carlo</h3>
+<h3 id="org774cf0e"><span class="section-number-3">3.9</span> Hamiltonian Monte Carlo</h3>
 <ul>
 <li class="fragment appear">The leapfrog has a tuning parameter, the step size \(\varepsilon\)</li>
 <li class="fragment appear">Only continuous distributions can be used since the un-normalised
@@ -330,9 +331,9 @@ parameter space, the optimal acceptance rate is 0.65</li>
 </section>
 </section>
 <section>
-<section id="slide-orgc10c309" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orga7a9800" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgc10c309"><span class="section-number-3">3.10</span> HMC algorithm in Scala</h3>
+<h3 id="orga7a9800"><span class="section-number-3">3.10</span> HMC algorithm in Scala</h3>
 <div class="org-src-container">
 
 <pre><code class="Scala" >def step(psi: DenseVector[Double]): Rand[DenseVector[Double]] = {
@@ -355,9 +356,9 @@ parameter space, the optimal acceptance rate is 0.65</li>
 </section>
 </section>
 <section>
-<section id="slide-org6b87551" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org79e26d7" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org6b87551"><span class="section-number-3">3.11</span> The Leapfrog step</h3>
+<h3 id="org79e26d7"><span class="section-number-3">3.11</span> The Leapfrog step</h3>
 <div class="org-src-container">
 
 <pre><code class="Scala" >def leapfrog(
@@ -377,9 +378,9 @@ parameter space, the optimal acceptance rate is 0.65</li>
 </section>
 </section>
 <section>
-<section id="slide-org6b83cab" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgaea13b1" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org6b83cab"><span class="section-number-3">3.12</span> Multiple leapfrog steps</h3>
+<h3 id="orgaea13b1"><span class="section-number-3">3.12</span> Multiple leapfrog steps</h3>
 <div class="org-src-container">
 
 <pre><code class="Scala" >def leapfrogs(
@@ -402,9 +403,9 @@ parameter space, the optimal acceptance rate is 0.65</li>
 </section>
 </section>
 <section>
-<section id="slide-orgb5e4c51" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgafb89f2" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgb5e4c51"><span class="section-number-3">3.13</span> Tuning Hamiltonian Monte Carlo</h3>
+<h3 id="orgafb89f2"><span class="section-number-3">3.13</span> Tuning Hamiltonian Monte Carlo</h3>
 <ul>
 <li class="fragment appear">The step size \(\varepsilon\) and the number of leapfrog steps \(l\) are tuning
 parameters which can be determined with pilot runs aiming for the optimal
@@ -419,18 +420,18 @@ appropriate step size number of steps</li>
 </section>
 </section>
 <section>
-<section id="slide-orgeef4676" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgacc4de7" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h2 id="orgeef4676"><span class="section-number-2">4</span> Functional Programming</h2>
+<h2 id="orgacc4de7"><span class="section-number-2">4</span> Functional Programming</h2>
 <div class="outline-text-2" id="text-4">
 </div>
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orgc091d28" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgb472204" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgc091d28"><span class="section-number-3">4.1</span> Good things</h3>
+<h3 id="orgb472204"><span class="section-number-3">4.1</span> Good things</h3>
 <ul>
 <li class="fragment appear">Pure Functions</li>
 <li class="fragment appear">Function Composition</li>
@@ -444,9 +445,9 @@ appropriate step size number of steps</li>
 </section>
 </section>
 <section>
-<section id="slide-org72466da" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgc79a8b3" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org72466da"><span class="section-number-3">4.2</span> Higher Order Functions</h3>
+<h3 id="orgc79a8b3"><span class="section-number-3">4.2</span> Higher Order Functions</h3>
 <ul>
 <li>Let's apply a function to a list</li>
 
@@ -463,11 +464,19 @@ xs
 </code></pre>
 </div>
 
+<div class="org-src-container">
+
+<pre><code class="org" >xs: Array[Int] = Array(1, 2, 3, 4, 5)
+i: Int = 0
+res16: Array[Int] = Array(2, 3, 4, 5, 6)
+</code></pre>
+</div>
+
 <div class="slide-footer"></div>
 </section>
-<section id="slide-org077460e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org4c4067e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h4 id="org077460e"><span class="section-number-4">4.2.1</span> Map</h4>
+<h4 id="org4c4067e"><span class="section-number-4">4.2.1</span> Map</h4>
 <ul>
 <li>Maps, create a copy of the collection with the updated values</li>
 
@@ -493,9 +502,9 @@ xs
 
 <div class="slide-footer"></div>
 </section>
-<section id="slide-orgc17acaa" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org655dadf" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h4 id="orgc17acaa"><span class="section-number-4">4.2.2</span> Reduction</h4>
+<h4 id="org655dadf"><span class="section-number-4">4.2.2</span> Reduction</h4>
 <ul>
 <li>Folds, apply a binary operation to a collection using the previous result</li>
 
@@ -521,9 +530,9 @@ xs
 
 <div class="slide-footer"></div>
 </section>
-<section id="slide-orgeb075ec" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgba2baed" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h4 id="orgeb075ec"><span class="section-number-4">4.2.3</span> flatMap</h4>
+<h4 id="orgba2baed"><span class="section-number-4">4.2.3</span> flatMap</h4>
 <ul>
 <li>Apply a function which returns a collection, to a collection then flatten
 it (sometimes called bind)</li>
@@ -552,9 +561,9 @@ it (sometimes called bind)</li>
 </section>
 </section>
 <section>
-<section id="slide-org941ae8c" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgefa9e96" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org941ae8c"><span class="section-number-3">4.3</span> Polymorphism</h3>
+<h3 id="orgefa9e96"><span class="section-number-3">4.3</span> Polymorphism</h3>
 <ul>
 <li class="fragment appear">Sometimes static types are associated with verbosity</li>
 <li class="fragment appear">Type inference and ad-hoc Polymorphism can help</li>
@@ -572,9 +581,9 @@ it (sometimes called bind)</li>
 </section>
 </section>
 <section>
-<section id="slide-org8ca6033" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org67ade43" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org8ca6033"><span class="section-number-3">4.4</span> Typeclasses</h3>
+<h3 id="org67ade43"><span class="section-number-3">4.4</span> Typeclasses</h3>
 <ul>
 <li>A typeclass is an abstract implementation of a class</li>
 
@@ -601,9 +610,9 @@ it (sometimes called bind)</li>
 </section>
 </section>
 <section>
-<section id="slide-org4075a35" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org6481a6e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org4075a35"><span class="section-number-3">4.5</span> Typeclasses</h3>
+<h3 id="org6481a6e"><span class="section-number-3">4.5</span> Typeclasses</h3>
 <ul>
 <li>Concrete members of a typeclass can be provided using implicit definitions</li>
 
@@ -624,18 +633,18 @@ it (sometimes called bind)</li>
 </section>
 </section>
 <section>
-<section id="slide-org5022abc" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgf83b69c" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h2 id="org5022abc"><span class="section-number-2">5</span> Category Theory</h2>
+<h2 id="orgf83b69c"><span class="section-number-2">5</span> Category Theory</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orga89008f" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgcd979b5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orga89008f"><span class="section-number-3">5.1</span> What is a Category?</h3>
+<h3 id="orgcd979b5"><span class="section-number-3">5.1</span> What is a Category?</h3>
 <ul>
 <li class="fragment appear">A category \(\mathcal{C}\) consists of objects \(\textrm{obj}(\mathcal{C})\)
 and arrows, or morphisms between categories, \(\textrm{hom}(\mathcal{C})\)</li>
@@ -649,11 +658,24 @@ and arrows, or morphisms between categories, \(\textrm{hom}(\mathcal{C})\)</li>
 </section>
 </section>
 <section>
-<section id="slide-org6a3a6a5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orged380d2" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org6a3a6a5"><span class="section-number-3">5.2</span> Functors</h3>
+<h3 id="orged380d2"><span class="section-number-3">5.2</span> Functors</h3>
 <ul>
-<li>A functor is a mapping between categories which preserves structure</li>
+<li class="fragment appear">A functor is a mapping between categories which preserves structure</li>
+<li class="fragment appear">\(\mathcal{C}\) and \(\mathcal{D}\) are categories, then a functor \(F:\mathcal{C} \rightarrow \mathcal{D}\): 
+<ul>
+<li>Associates \(X \in \mathcal{C}\) to an object \(F(X) \in \mathcal{D}\)</li>
+<li>And each morphism, \(f:X \rightarrow Y\) in \(\mathcal{C}\) to a morphism in
+\(\mathcal{D}\), \(F(f): F(X) \rightarrow F(Y)\).</li>
+
+</ul></li>
+<li class="fragment appear">Satisfying
+<ul>
+<li>\(F(\textrm{id}_X) = \textrm{id}_{F(X)}\) for each \(X \in \mathcal{C}\)</li>
+<li>\(F(g \circ f) = F(g) \circ F(f)\) for all morphisms, \(f, g \in \mathcal{C}\)</li>
+
+</ul></li>
 
 </ul>
 
@@ -661,42 +683,146 @@ and arrows, or morphisms between categories, \(\textrm{hom}(\mathcal{C})\)</li>
 </section>
 </section>
 <section>
-<section id="slide-org8d9f2c0" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgb804cfb" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org8d9f2c0"><span class="section-number-3">5.3</span> Natural Transformation</h3>
+<h3 id="orgb804cfb"><span class="section-number-3">5.3</span> Natural Transformation</h3>
+<ul>
+<li class="fragment appear">A functor is a morphism between two categories, a natural transformation is a morphism between functors</li>
+<li class="fragment appear">\(X \in \mathcal{C}\), \(F, G: \mathcal{C} \rightarrow \mathcal{D}\) are functors, then a natural
+transformation \(\alpha: F(X) \Rightarrow G(X)\) is a family of morphisms such that:
+<ul>
+<li>\(\forall X \in \mathcal{C}\) then \(\alpha_X: F(X) \rightarrow G(X)\) is a
+morphism in \(\mathcal{D}\)</li>
+<li>for each  \(f \in \mathcal{C}\) then \(\alpha_Y \circ F(f) = G(f) \circ \alpha_X\).</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-orgcc8df1e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="orgcc8df1e"><span class="section-number-4">5.3.1</span> Natural Transformation</h4>
+
+<div id="orga0c59ba" class="figure">
+<p><img src="./figures/natural_transformation.png" alt="natural_transformation.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Commutative diagram for the natural transformation laws</p>
+</div>
 
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orgfc6e2b7" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgf62e8c6" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgfc6e2b7"><span class="section-number-3">5.4</span> Monads</h3>
+<h3 id="orgf62e8c6"><span class="section-number-3">5.4</span> Monads</h3>
+<ul>
+<li>A monad is an endofunctor, \(T: \mathcal{C} \rightarrow \mathcal{C}\) with
+two natural transformations
+<ul>
+<li>\(\eta: \textrm{Id}_{\mathcal{c}} \rightarrow T\)</li>
+<li>\(\mu: T \circ T \rightarrow T\)</li>
 
+</ul></li>
+<li>Such that \(\mu \circ T \mu = \mu \circ \mu T\)</li>
+<li>and \(\mu \circ T\eta = \mu \circ \eta T = \textrm{Id}_T\)</li>
+
+</ul>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org5bfbce4" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org5bfbce4"><span class="section-number-4">5.4.1</span> Monads</h4>
+<table id="org6b4991d" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Commutative diagrams for the monad laws</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><img src="./figures/monad_laws.png" alt="monad_laws.png" /></td>
+<td class="org-left"><img src="./figures/monad_law_2.png" alt="monad_law_2.png" /></td>
+</tr>
+</tbody>
+</table>
 
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-org9988f99" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org3c48f98" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org9988f99"><span class="section-number-3">5.5</span> Why?</h3>
+<h3 id="org3c48f98"><span class="section-number-3">5.5</span> Why?</h3>
+<ul>
+<li class="fragment appear">Types and functions form a category, called <code>Hask</code>, every functor is hence
+an endofunctor, \(F: \texttt{Hask} \rightarrow \texttt{Hask}\)</li>
+<li class="fragment appear">Principled abstractions for functional programming</li>
+<li class="fragment appear">Testing mathematical laws instead of individual functions</li>
+<li class="fragment appear">Verifying the correctness of programs</li>
+
+</ul>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org945f585" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org945f585"><span class="section-number-4">5.5.1</span> Distribution is a Monad</h4>
+<ul>
+<li>A monad provides a context for an effect</li>
+<li>Can preserve immutability be encapsulating random draws in a monad
+<code>Rand[A]</code> representing a distribution over the type <code>A</code></li>
+<li>Unit is the dirac distribution</li>
+<li><code>flatMap</code> represents a joint or marginal distribution</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre><code class="scala" >def coinFlip(n: Int): Rand[Int] = Beta(3, 3).flatMap(p => Binomial(n, p))
+</code></pre>
+</div>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org3c37e77" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org3c37e77"><span class="section-number-4">5.5.2</span> Syntactic Sugar</h4>
+<ul>
+<li>For comprehension provides is syntactic sugar for chains of <code>flatMap</code> and
+<code>map</code></li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre><code class="scala" >def coinFlip(n: Int): Rand[Int] = for {
+  p <- Beta(3, 3)
+} yield Binomial(n, p)
+</code></pre>
+</div>
+
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-org16cb0e4" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org267af4d" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h2 id="org16cb0e4"><span class="section-number-2">6</span> Automatic Differentiation</h2>
+<h2 id="org267af4d"><span class="section-number-2">6</span> Automatic Differentiation</h2>
 <div class="outline-text-2" id="text-6">
 </div>
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orga58382e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org3c549d6" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orga58382e"><span class="section-number-3">6.1</span> What?</h3>
+<h3 id="org3c549d6"><span class="section-number-3">6.1</span> What?</h3>
 <ul>
 <li class="fragment appear">Calculate the exact derivative of a function at a point</li>
 <li class="fragment appear">Not symbolic differentiation</li>
@@ -708,9 +834,9 @@ and arrows, or morphisms between categories, \(\textrm{hom}(\mathcal{C})\)</li>
 </section>
 </section>
 <section>
-<section id="slide-org5ede2e5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org6cdac9a" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org5ede2e5"><span class="section-number-3">6.2</span> Forward Model AD</h3>
+<h3 id="org6cdac9a"><span class="section-number-3">6.2</span> Forward Mode AD</h3>
 <ul>
 <li class="fragment appear">Consider the function \(f(x) = x^2 + 2x + 5\) with derivative \(f^\prime(x) =
      2x + 2\)</li>
@@ -723,9 +849,9 @@ suppose \(x = 5, f(5) = 40, f^\prime(5) = 12\)</li>
 </section>
 </section>
 <section>
-<section id="slide-org7ed467d" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgfed5104" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org7ed467d"><span class="section-number-3">6.3</span> Dual Numbers</h3>
+<h3 id="orgfed5104"><span class="section-number-3">6.3</span> Dual Numbers</h3>
 <ul>
 <li class="fragment appear"><p>
 To perform forward mode AD specify the dual number to \(x = 5\), \(x^\prime =
@@ -748,18 +874,138 @@ dimension of the parameters</li>
 </section>
 </section>
 <section>
-<section id="slide-org067bbf5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgeec1056" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h2 id="org067bbf5"><span class="section-number-2">7</span> Putting it all together</h2>
+<h3 id="orgeec1056"><span class="section-number-3">6.4</span> Implementation</h3>
+<ul>
+<li>Create a new class representing a dual number:</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre><code class="scala" >case class Dual(real: Double, eps: Double)
+</code></pre>
+</div>
+
+<ul>
+<li>Define an instance of the <code>Numeric[Dual]</code> typeclass</li>
+
+</ul>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org67a055e" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org67a055e"><span class="section-number-4">6.4.1</span> Dual Operators</h4>
+<div class="org-src-container">
+
+<pre><code class="scala" >def plus(x: Dual, y: Dual) =
+  Dual(x.real + y.real, x.eps + y.eps)
+def minus(x: Dual, y: Dual): Dual =
+  Dual(y.real - x.real, y.eps - x.eps)
+def times(x: Dual, y: Dual) =
+  Dual(x.real * y.real, x.eps * y.real + y.eps * x.real)
+def div(x: Dual, y: Dual) =
+  Dual(x.real / y.real, 
+  (x.eps * y.real - x.real * y.eps) / (y.real * y.real))
+</code></pre>
+</div>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-orgd7dd8d7" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="orgd7dd8d7"><span class="section-number-4">6.4.2</span> Dual Usage</h4>
+<div class="org-src-container">
+
+<pre><code class="scala" >def logPos(ys: Vector[Double])(mu: Dual) = 
+  (-0.5 * 0.125 * mu * mu) - 0.125 * ys.
+    map(_ - mu).
+    map(x => x * x).
+    reduce(_ + _)
+</code></pre>
+</div>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org1aa2bb5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org1aa2bb5"><span class="section-number-4">6.4.3</span> Extension to Gradients</h4>
+<ul>
+<li>Define a new Dual class</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre><code class="scala" >case class DualV(real: Double, dual: Vector[Double])
+</code></pre>
+</div>
+
+<ul>
+<li>The <code>dual</code> argument can be confused between variables, each variable in a
+computation must have the same dimension <code>dual</code></li>
+
+</ul>
+
+<div class="slide-footer"></div>
+</section>
+</section>
+<section>
+<section id="slide-orgffa9e9a" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h3 id="orgffa9e9a"><span class="section-number-3">6.5</span> Reverse Mode AD</h3>
+<ul>
+<li>Reverse mode AD scales in the dimension of the output space</li>
+<li>Faster than forward mode for \(f: \mathbb{R}^n \rightarrow \mathbb{R}^m\)
+when \(n > m\)</li>
+
+</ul>
+
+<div class="slide-footer"></div>
+</section>
+</section>
+<section>
+<section id="slide-org88c7497" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h2 id="org88c7497"><span class="section-number-2">7</span> Putting it all together</h2>
 <div class="outline-text-2" id="text-7">
 </div>
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-org1efc776" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org237056f" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org1efc776"><span class="section-number-3">7.1</span> Linear Regression</h3>
+<h3 id="org237056f"><span class="section-number-3">7.1</span> Building our own PPL</h3>
+<ul>
+<li>Embedded DSL for model building using Monads</li>
+<li>Fast generic inference schemes for sampling from posterior distributions</li>
+<li>Automatic differentiation for gradient based samplers</li>
+
+</ul>
+
+<div class="slide-footer"></div>
+</section>
+</section>
+<section>
+<section id="slide-org4d573a4" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h3 id="org4d573a4"><span class="section-number-3">7.2</span> Linear Regression</h3>
+<div>
+\begin{equation}
+y_i = \beta^T x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,
+\sigma).
+\end{equation}
+
+</div>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-orge4507c6" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="orge4507c6"><span class="section-number-4">7.2.1</span> Linear Regression</h4>
 <div class="org-src-container">
 
 <pre><code class="Scala" >val model = for {
@@ -775,24 +1021,56 @@ dimension of the parameters</li>
   }
   .fit(x zip y)
 } yield Map("b0" -&gt; b0, "b1" -&gt; b1, "b2" -&gt; b2, "sigma" -&gt; sigma) 
+
+model.sample(EHMC(10), 5000, 10000 * 20, 20)
 </code></pre>
+</div>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org47c1784" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org47c1784"><span class="section-number-4">7.2.2</span> Linear Regression</h4>
+
+<div id="org3cb7364" class="figure">
+<p><img src="./figures/ehmc_lm.png" alt="ehmc_lm.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Diagnostic plots for simulated data from the linear regression model</p>
 </div>
 
 <div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orgf39bdf5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-orgb15cbc3" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="orgf39bdf5"><span class="section-number-3">7.2</span> Stochastic Volatility</h3>
+<h3 id="orgb15cbc3"><span class="section-number-3">7.3</span> Stochastic Volatility</h3>
+<ul>
+<li>A heteroskedastic time series with latent log-volatility \(\alpha_t\)</li>
+
+</ul>
+
+<div>
+\begin{align}
+y_t &= \sigma_t\exp\left(\frac{\alpha_t}{2}\right), &\sigma_t &\sim \mathcal{N}(0, 1), \\
+\textrm{d}\alpha_t &= \phi(\alpha_t - \mu)\textrm{d}t + \sigma \textrm{d}W_t.
+\end{align}
+
+</div>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org59a87b8" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org59a87b8"><span class="section-number-4">7.3.1</span> Stochastic Volatility</h4>
 <div class="org-src-container">
 
-<pre><code class="Scala" >val prior = for {
-  phi1 &lt;- Beta(5.0, 2.0).param
+<pre><code class="scala" >val prior = for {
+  phi1 <- Beta(5.0, 2.0).param
   phi = 2 * phi1 - 1
-  mu &lt;- Normal(0.0, 2.0).param
-  sigma &lt;- LogNormal(2.0, 2.0).param
-  x0 &lt;- Normal(mu, sigma * sigma / (1 - phi * phi)).param
+  mu <- Normal(0.0, 2.0).param
+  sigma <- LogNormal(2.0, 2.0).param
+  x0 <- Normal(mu, sigma * sigma / (1 - phi * phi)).param
   t0 = 0.0
 } yield (t0, phi, mu, sigma, x0)
 
@@ -801,13 +1079,22 @@ def ouStep(phi: Real, mu: Real, sigma: Real, x0: Real, dt: Double) = {
   val variance = sigma.pow(2) * (1 - (-2 * phi * dt).exp) / (2*phi)
   Normal(mean, variance.pow(0.5))
 }
+</code></pre>
+</div>
 
-def step(st: RandomVariable[(Double, Real, Real, Real, Real)],
+<div class="slide-footer"></div>
+</section>
+<section id="slide-orga2791b5" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="orga2791b5"><span class="section-number-4">7.3.2</span> Stochastic Volatility</h4>
+<div class="org-src-container">
+
+<pre><code class="scala" >def step(st: RandomVariable[(Double, Real, Real, Real, Real)],
          y: (Double, Double)) = for {
-    (t, phi, mu, sigma, x0) &lt;- st
+    (t, phi, mu, sigma, x0) <- st
     dt = y._1 - t
-    x1 &lt;- ouStep(phi, mu, sigma, x0, dt).param
-    _ &lt;- Normal(0.0, (x1 * 0.5).exp).fit(y._2)
+    x1 <- ouStep(phi, mu, sigma, x0, dt).param
+    _ <- Normal(0.0, (x1 * 0.5).exp).fit(y._2)
   } yield (t + dt, phi, mu, sigma, x1)
 
 
@@ -819,9 +1106,63 @@ val fullModel = ys.foldLeft(prior)(step)
 </section>
 </section>
 <section>
-<section id="slide-org162775d" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<section id="slide-org06b9d93" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
 <div class="slide-header"></div>
-<h3 id="org162775d"><span class="section-number-3">7.3</span> Mixture Model</h3>
+<h3 id="org06b9d93"><span class="section-number-3">7.4</span> Mixture Model</h3>
+<ul>
+<li>Data is assumed to come from one of \(k\) distributions</li>
+
+</ul>
+
+<div>
+\begin{align*}
+  y_i &\sim \mathcal{N}(\mu_k, \sigma), \\
+  k &\sim \mathcal{F}(\theta).
+\end{align*}
+
+</div>
+
+<div class="slide-footer"></div>
+</section>
+<section id="slide-org4863fda" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h4 id="org4863fda"><span class="section-number-4">7.4.1</span> Mixture Model</h4>
+<div class="org-src-container">
+
+<pre><code class="scala" >val model = for {
+  theta1 <- Beta(2.0, 5.0).param
+  theta2 <- Beta(2.0, 5.0).param
+  alphas = Seq(theta1.log, theta2.log, Real.zero)
+  thetas = softmax(alphas)
+  mu1 <- Normal(0.0, 5.0).param
+  mu2 <- Normal(0.0, 5.0).param
+  mu3 <- Normal(0.0, 5.0).param
+  mus = Seq(mu1, mu2, mu3)
+  sigma <- Gamma(2.0, 10.0).param
+  components: Map[Continuous, Real] = mus.zip(thetas).map {
+    case (m: Real, t: Real) => (Normal(m, sigma) -> t) }.toMap
+  _ <- Mixture(components).fit(ys)
+} yield Map("theta1" -> thetas.head, "theta2" -> thetas(1),
+              "theta3" -> thetas(2),
+                "mu1" -> mu1, "mu2" -> mu2, "mu3" -> mu3, "sigma" -> sigma)
+
+</code></pre>
+</div>
+
+<div class="slide-footer"></div>
+</section>
+</section>
+<section>
+<section id="slide-orgd0e7bec" data-background="" data-background-size="" data-background-position="" data-background-repeat="" data-background-transition="">
+<div class="slide-header"></div>
+<h2 id="orgd0e7bec"><span class="section-number-2">8</span> Conclusion</h2>
+<ul>
+<li>Probabilistic programming languages can be used to quickly
+prototype new models without implementing and testing new inference schemes</li>
+<li>Embedded PPLs can be deployed in production code without rewriting -
+reducing bugs and enabling faster inference in industrial settings</li>
+
+</ul>
 <div class="slide-footer"></div>
 </section>
 </section>
