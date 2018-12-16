@@ -1,0 +1,504 @@
+#+OPTIONS: reveal_center:t reveal_control:t reveal_height:-1 reveal_history:nil
+#+OPTIONS: reveal_keyboard:t reveal_overview:t reveal_progress:t
+#+OPTIONS: reveal_rolling_links:nil reveal_single_file:nil
+#+OPTIONS: reveal_slide_number:"c" reveal_title_slide:auto reveal_width:-1
+#+REVEAL_MARGIN: -1
+#+REVEAL_MIN_SCALE: -1
+#+REVEAL_MAX_SCALE: -1
+#+REVEAL_ROOT: ./reveal.js
+#+REVEAL_TRANS: slide
+#+REVEAL_SPEED: default
+#+REVEAL_THEME: beige
+#+REVEAL_EXTRA_CSS:
+#+REVEAL_EXTRA_JS:
+#+REVEAL_HLEVEL: 2
+#+REVEAL_TITLE_SLIDE_BACKGROUND:
+#+REVEAL_TITLE_SLIDE_BACKGROUND_SIZE:
+#+REVEAL_TITLE_SLIDE_BACKGROUND_POSITION:
+#+REVEAL_TITLE_SLIDE_BACKGROUND_REPEAT:
+#+REVEAL_TITLE_SLIDE_BACKGROUND_TRANSITION:
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND:
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND_SIZE:
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND_POSITION:
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND_REPEAT:
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND_TRANSITION:
+#+REVEAL_MATHJAX_URL: https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+#+REVEAL_PREAMBLE:
+#+REVEAL_HEAD_PREAMBLE:
+#+REVEAL_POSTAMBLE:
+#+REVEAL_MULTIPLEX_ID:
+#+REVEAL_MULTIPLEX_SECRET:
+#+REVEAL_MULTIPLEX_URL:
+#+REVEAL_MULTIPLEX_SOCKETIO_URL:
+#+REVEAL_SLIDE_HEADER:
+#+REVEAL_SLIDE_FOOTER:
+#+REVEAL_PLUGINS: (highlight)
+#+REVEAL_DEFAULT_FRAG_STYLE:
+#+REVEAL_INIT_SCRIPT:
+#+REVEAL_HIGHLIGHT_CSS: %r/lib/css/tomorrow-night-eighties.css
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+OPTIONS: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t e:t
+#+OPTIONS: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+OPTIONS: tasks:t tex:t timestamp:t title:t toc:1 todo:t |:t
+#+TITLE: Probabilistic Programming in Scala
+#+DATE: <2018-12-15 Sat>
+#+AUTHOR: Jonny Law
+#+EMAIL: 
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+
+* Introduction to Bayesian Inference
+
+** Bayesian Statistics
+
+   * Bayesian statistics is concerned with expressing uncertainty using probability
+   * Provides a framework for subjective beliefs and updating - reflecting how
+     people reason in real life
+
+** Bayes Theorem
+
+   * Bayes theorem allows us to determine the probability of a hypothesis being
+     true by collecting data related to the hypothesis
+
+$p(H|y) = \frac{P(y|H)p(H)}{\int p(y)}$
+
+** Finding the integral
+
+
+   * The denominator of Bayes theorem is often intractable 
+   * Sampling based inference methods can be used to approximate the posterior
+     distribution
+
+* Probabilistic Programming
+
+** What is Probabilistic Programming?
+#+ATTR_REVEAL: :frag (appear)
+    * Efficiently expressing Bayesian statistical models and performing inference
+    * Provide a consistent, flexible modelling language for specifying prior
+      beliefs and likelihooods
+    * Abstract away the inference algorithms from the user
+
+** Examples of PPLs
+
+#+ATTR_REVEAL: :frag (appear)
+   * Stan http://mc-stan.org/
+   * BUGS https://www.mrc-bsu.cam.ac.uk/software/bugs/
+   * Jags http://mcmc-jags.sourceforge.net/
+   * PyMc https://pymc-devs.github.io/pymc/
+   * Pyro (Uber) https://github.com/uber/pyro
+   * TensorFlow Probability (Google) https://www.tensorflow.org/probability/
+   * Rainier (Stripe) https://github.com/stripe/rainier/
+
+** Why?
+
+#+ATTR_REVEAL: :frag (appear)
+   * Small data
+   * Transparent, interpretable models 
+   * Incorporate expert judgment required in many areas of business
+
+* Statistical Computation
+
+** Conjugacy
+#+ATTR_REVEAL: :frag (appear)
+   * The prior distribution is the same distribution as the posterior
+     distribution and can be derived analytically
+   * Only applicable for some models
+
+** Gibbs Sampling
+
+#+ATTR_REVEAL: :frag (appear)
+   * Markov chain Monte Carlo (MCMC) method which exploits conditional probability to derive conditionally conjugate distributions
+   * Sample from each conditional conjugate distribution in turn to create a
+     Markov chain representing draws from the full posterior distribution
+   * Restricts the form of the prior distribution to a conjugate family
+
+** Metropolis-Hastings
+
+#+ATTR_REVEAL: :frag (appear)
+   * General MCMC method with no restriction on prior distributions 
+   * New parameters are proposed from some proposal distribution, $\psi^\star
+     \sim p(\psi^\star|\psi)$ and accepted according to the
+     Metropolis-Hastings ratio
+       $A = \frac{p(\psi^\star)\pi(Y|\psi^\star)q(\psi|\psi^\star)}{p(\psi)\pi(Y|\psi)q(\psi^\star|\psi)}$
+   * $p(\psi)$ is the prior distribution, $\pi(Y|\psi)$ is the likelihood,
+     $q(\psi|\psi^\star)$ is the probability of moving from $\psi^\star$ to
+     $\psi$ 
+
+** Metropolis-Hastings
+
+#+BEGIN_SRC Scala
+def mhStep[P](posterior: P => Double, 
+              proposal: P => Dist[P]) = { p: P =>
+  for {
+    ps <- proposal(p)
+    a = posterior(ps) - proposal(p).logPdf(ps) - 
+      posterior(p) + proposal(ps).logPdf(p)
+    u <- Dist.uniform(0, 1)
+    next = if (log(u) < a) ps else p
+  } yield next
+}
+#+END_SRC
+
+** Metropolis-Hastings
+
+#+ATTR_REVEAL: :frag (appear)
+   * Metropolis-Hastings is simple to implement and guaranteed to converge if
+     it's left long enough - but no one wants to wait forever
+   * The optimal acceptance ratio is 0.234 - most moves are rejected
+   * A random-walk proposal centered at the previous parameter is often a
+     default choice
+     $p(\psi^\star|\psi) \sim \mathcal{N}(\psi | \Sigma)$
+   * The cost of an independent sample from the stationary distribution is
+     $\mathcal{O}(d^2)$ for a $d$ dimensional parameter space
+
+** Hamiltonian Monte Carlo
+
+#+ATTR_REVEAL: :frag (appear)
+   * Can we use gradient information from the un-normalised log posterior?
+   * Improved proposal based on Hamilton's Equations:
+    \begin{align}
+      \frac{\mathrm{d}p}{\mathrm{d}t} &= -\frac{\partial \mathcal{H}}{\partial q}, \\
+      \frac{\mathrm{d}q}{\mathrm{d}t} &= +\frac{\partial\mathcal{H}}{\partial p}
+    \end{align}
+   * $\boldsymbol{p}$ is the momentum, equal to $m\dot{\boldsymbol{q}}$
+   * $\boldsymbol{q}$ is the particle position
+
+** Hamiltonian Monte Carlo
+
+#+ATTR_REVEAL: :frag (appear)
+   * The static parameters correspond to the position in Hamilton's equations,
+     the momentum is an auxiliary parameter
+   * The joint density of the parameters and momentum can be written as:
+      $p(\psi, \phi) \propto \exp \left\{ \log p(\psi|y) - \frac{1}{2}\phi^T\phi \right\}$
+   * A special discretisation of Hamilton's equations is used which exactly conserves energy called a leapfrog step
+
+** The Leapfrog step
+
+   \begin{align*}
+     \phi_{t+\varepsilon/2} &= \phi_{t-1} + \frac{\varepsilon}{2} \nabla_\psi\log p(y|\psi_{t-1}), \\
+     \psi_{t+\varepsilon} &= \psi_{t-1} + \varepsilon \phi_{t+\varepsilon/2}, \\
+     \phi_{t+\varepsilon} &= \phi_{t+\varepsilon/2} + \frac{\varepsilon}{2} \nabla\log p(y|\psi_{t+\varepsilon}).
+   \end{align*}
+
+** Hamiltonian Monte Carlo
+
+#+ATTR_REVEAL: :frag (appear)
+    * The leapfrog has a tuning parameter, the step size $\varepsilon$
+    * Only continuous distributions can be used since the un-normalised
+      log-posterior must be differentiable
+    * Non conjugate prior distributions can be used, like Metropolis-Hastings
+    * HMC is more computationally efficient, requiring $O(d^\frac{5}{4})$ for an
+      independent sample from the posterior distribution of a $d$ dimensional
+      parameter space, the optimal acceptance rate is 0.65
+    * Calculating derivatives is tedious and error-prone
+
+** HMC algorithm in Scala
+
+#+BEGIN_SRC Scala
+def step(psi: DenseVector[Double]): Rand[DenseVector[Double]] = {
+  for {
+    phi <- priorPhi
+    (propPsi, propPhi) = leapfrogs(eps, gradient, l, psi, phi)
+    a = logAcceptance(propPsi, propPhi, psi, phi, ll, priorPhi)
+    u <- Uniform(0, 1)
+    next = if (log(u) < a) {
+      propPsi
+    } else {
+      psi
+    }
+  } yield next
+}
+#+END_SRC
+
+** The Leapfrog step
+
+#+BEGIN_SRC Scala
+def leapfrog(
+  eps: Double,
+  gradient: DenseVector[Double] => DenseVector[Double])(
+  psi: DenseVector[Double],
+  phi: DenseVector[Double]) = {
+  val p1 = phi + eps * 0.5 * gradient(psi)
+  val t1 = psi + eps * p1
+  val p2 = p1 + eps * 0.5 * gradient(t1)
+  (t1, p2)
+}
+#+END_SRC
+
+** Multiple leapfrog steps
+
+#+BEGIN_SRC Scala
+def leapfrogs(
+  eps: Double,
+  gradient: DenseVector[Double] => DenseVector[Double],
+  l: Int,
+  psi: DenseVector[Double],
+  phi: DenseVector[Double]) = {
+    if (l == 0) {
+      (theta, phi)
+    } else {
+      val (t, p) = leapfrog(eps, gradient, theta, phi)
+      leapfrogs(eps, gradient, l-1, t, p)
+    }
+  }
+#+END_SRC
+
+** Tuning Hamiltonian Monte Carlo
+#+ATTR_REVEAL: :frag (appear)
+   * The step size $\varepsilon$ and the number of leapfrog steps $l$ are tuning
+     parameters which can be determined with pilot runs aiming for the optimal
+     acceptance rate 0.65
+   * The Dual averaging and the NUTS algorithm can be used to determine an
+     appropriate step size number of steps
+   * eHMC is another algorithm for automatically selecting the step size
+
+* Functional Programming
+
+** Good things
+#+ATTR_REVEAL: :frag (appear)
+   * Pure Functions
+   * Function Composition
+   * Immutable Data Structures
+   * Static Types with type inference
+   * Predictable, correct programs
+
+** Higher Order Functions
+
+   * Let's apply a function to a list
+#+BEGIN_SRC scala :results value org
+val xs = Array(1,2,3,4,5)
+var i = 0
+while (i < xs.size) {
+  xs(i) = xs(i) + 1
+  i += 1
+}
+xs
+#+END_SRC
+
+#+BEGIN_SRC org
+xs: Array[Int] = Array(1, 2, 3, 4, 5)
+i: Int = 0
+res16: Array[Int] = Array(2, 3, 4, 5, 6)
+#+END_SRC
+
+*** Map
+
+    * Maps, create a copy of the collection with the updated values
+
+ #+BEGIN_SRC scala :results value org
+ xs map (_ + 1)
+ #+END_SRC
+
+ #+BEGIN_SRC org
+ res18: Array[Int] = Array(3, 4, 5, 6, 7)
+ #+END_SRC
+
+#+BEGIN_SRC scala
+def map[A, B](fa: List[A])(f: A => B): List[B]
+#+END_SRC
+
+*** Reduction
+
+    * Folds, apply a binary operation to a collection using the previous result
+
+ #+BEGIN_SRC scala :results value org
+ xs.foldLeft(0)(_ + _)
+ #+END_SRC
+
+ #+BEGIN_SRC org
+ res20: Int = 20
+ #+END_SRC
+
+#+BEGIN_SRC scala
+def foldLeft[A, B](fa: List[A])(z: B)(f: (B, A) => B): B
+#+END_SRC
+
+*** flatMap
+
+    * Apply a function which returns a collection, to a collection then flatten
+      it (sometimes called bind)
+
+#+BEGIN_SRC scala :results value org
+xs flatMap (x => List(x, x + 1, x + 2))
+#+END_SRC
+
+#+BEGIN_SRC org
+res22: Array[Int] = Array(2, 3, 4, 3, 4, 5, 4, 5, 6, 5, 6, 7, 6, 7, 8)
+#+END_SRC
+
+#+BEGIN_SRC scala
+def flatMap[A, B](fa: List[A])(f: A => List[B]): List[B])
+#+END_SRC
+
+** Polymorphism
+
+#+ATTR_REVEAL: :frag (appear)
+   * Sometimes static types are associated with verbosity
+   * Type inference and ad-hoc Polymorphism can help
+   * This function will add together all elements in a list which have a numeric type
+#+BEGIN_SRC scala
+def sum[A: Numeric](xs: List[A]): A = 
+  xs.foldLeft(_ + _)
+#+END_SRC
+
+** Typeclasses
+
+   * A typeclass is an abstract implementation of a class
+
+#+BEGIN_SRC scala
+trait Numeric[A] {
+ def compare(x: T, y: T): Int
+ def fromInt(x: Int): T
+ def minus(x: T, y: T): T
+ def negate(x: T): T
+ def plus(x: T, y: T): T
+ def times(x: T, y: T): T
+ def toDouble(x: T): Double
+ def toFloat(x: T): Float
+ def toInt(x: T): Int
+ def toLong(x: T): Long 
+}
+#+END_SRC
+
+** Typeclasses
+
+   * Concrete members of a typeclass can be provided using implicit definitions
+
+#+BEGIN_SRC scala
+implicit def numericInt = new Numeric[Int] { ... }
+#+END_SRC
+
+   * Type safety is retained and we don't have to write functions twice
+
+* Category Theory
+** What is a Category?
+
+#+ATTR_REVEAL: :frag (appear)
+   * A category $\mathcal{C}$ consists of objects $\textrm{obj}(\mathcal{C})$
+     and arrows, or morphisms between categories, $\textrm{hom}(\mathcal{C})$
+   * Morphisms compose, for $f: X \rightarrow Y$ and $g: Y \rightarrow Z$, then
+     $h: X \rightarrow Z$ is in $\textrm{hom}(\mathcal{C})$ given by $g \circ f$
+   * Objects must have identity morphisms, written $\textrm{id}_X: X \rightarrow X$
+
+** Functors
+
+#+ATTR_REVEAL: :frag (appear)
+   * A functor is a mapping between categories which preserves structure
+   * $\mathcal{C}$ and $\mathcal{D}$ are categories, then a \emph{functor} $F:\mathcal{C} \rightarrow \mathcal{D}$: 
+     * Associates $X \in \mathcal{C}$ to an object $F(X) \in \mathcal{D}$
+     * And each morphism, $f:X \rightarrow Y$ in $\mathcal{C}$ to a morphism in
+       $\mathcal{D}$, $F(f): F(X) \rightarrow F(Y)$. 
+   * Satisfying
+     * $F(\textrm{id}_X) = \textrm{id}_{F(X)}$ for each $X \in \mathcal{C}$
+     * $F(g \circ f) = F(g) \circ F(f)$ for all morphisms, $f, g \in \mathcal{C}$
+
+** Natural Transformation
+
+   * A functor is a morphism between two categories (which itself has morphisms
+between its objects)
+   * A natural transformation is a morphism between functors
+   * $F, G: \mathcal{C} \rightarrow \mathcal{D}$ are functors, then a natural transformation $\alpha: F(X) \Rightarrow G(X)$
+is a family of morphisms such that:
+       * $\forall X \in \mathcal{C}$ then $\alpha_X: F(X) \rightarrow G(X)$ is a
+         morphism in $\mathcal{D}$ 
+       * for each  $f \in \mathcal{C}$ then $\alpha_Y \circ F(f) = G(f) \circ \alpha_X$.
+
+** Natural Transformation
+
+#+CAPTION: This is the caption for the next figure link (or table)
+#+NAME:   fig:figures/tikz/natural_transformation
+[[./figures/natural_transformation.pdf]]
+
+** Monads
+
+
+** Why?
+#+ATTR_REVEAL: :frag (appear)
+   * Types and functions form a category, called `Hask`, every functor is hence
+     an endofunctor, $F: \textrm{Hask} \rightarrow \textrm{Hask}$
+   * Principled abstractions for functional programming
+   * Testing mathematical laws instead of individual functions
+   * Verifying the correctness of programs
+
+* Automatic Differentiation
+
+** What?
+
+#+ATTR_REVEAL: :frag (appear)
+   * Calculate the exact derivative of a function at a point
+   * Not symbolic differentiation
+   * Not numeric differentiation
+
+** Forward Model AD
+
+#+ATTR_REVEAL: :frag (appear)
+   * Consider the function $f(x) = x^2 + 2x + 5$ with derivative $f^\prime(x) =
+     2x + 2$
+   * We wish to calculate the derivative of a $f$ at a specific value of $x$,
+     suppose $x = 5, f(5) = 40, f^\prime(5) = 12$
+
+** Dual Numbers
+
+#+ATTR_REVEAL: :frag (appear)
+   * To perform forward mode AD specify the dual number to $x = 5$, $x^\prime =
+     5 + \varepsilon$ then calculate $f(x^\prime)$:
+     \begin{align*}
+          f(5 + \varepsilon) &= (5 + \varepsilon)^2 + 2(5 + \varepsilon) + 5 \\
+                   &= 25 + 10\varepsilon + \varepsilon^2 + 10 + 2\varepsilon + 5 \\
+                   &= 40 + 12\varepsilon
+     \end{align*}
+   * Number of computations depends on the dimension of the input space, ie. the
+     dimension of the parameters
+
+* Putting it all together
+
+** Linear Regression
+
+#+BEGIN_SRC Scala
+val model = for {
+  b0 <- Normal(0.0, 5.0).param
+  b1 <- Normal(0.0, 5.0).param
+  b2 <- Normal(0.0, 5.0).param
+  sigma <- Gamma(2.0, 2.0).param
+  _ <- Predictor.fromDoubleVector { xs =>
+    {
+      val mean = b0 + b1 * xs.head + b2 * xs(1)
+      Normal(mean, sigma)
+    }
+  }
+  .fit(x zip y)
+} yield Map("b0" -> b0, "b1" -> b1, "b2" -> b2, "sigma" -> sigma) 
+#+END_SRC
+
+** Stochastic Volatility
+
+#+BEGIN_SRC Scala
+val prior = for {
+  phi1 <- Beta(5.0, 2.0).param
+  phi = 2 * phi1 - 1
+  mu <- Normal(0.0, 2.0).param
+  sigma <- LogNormal(2.0, 2.0).param
+  x0 <- Normal(mu, sigma * sigma / (1 - phi * phi)).param
+  t0 = 0.0
+} yield (t0, phi, mu, sigma, x0)
+
+def ouStep(phi: Real, mu: Real, sigma: Real, x0: Real, dt: Double) = {
+  val mean = mu + (-1.0 * phi * dt).exp * (x0 - mu)
+  val variance = sigma.pow(2) * (1 - (-2 * phi * dt).exp) / (2*phi)
+  Normal(mean, variance.pow(0.5))
+}
+
+def step(st: RandomVariable[(Double, Real, Real, Real, Real)],
+         y: (Double, Double)) = for {
+    (t, phi, mu, sigma, x0) <- st
+    dt = y._1 - t
+    x1 <- ouStep(phi, mu, sigma, x0, dt).param
+    _ <- Normal(0.0, (x1 * 0.5).exp).fit(y._2)
+  } yield (t + dt, phi, mu, sigma, x1)
+
+
+val fullModel = ys.foldLeft(prior)(step)
+#+END_SRC
+
+** Mixture Model
