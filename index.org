@@ -55,7 +55,7 @@
    * Bayesian statistics is concerned with expressing uncertainty using probability
    * Provides a framework for subjective beliefs and updating - reflecting how
      people reason in real life
-
+     
 ** Bayes Theorem
 
    * Bayes theorem allows us to determine the probability of a hypothesis being
@@ -64,7 +64,6 @@
 $p(H|y) = \frac{P(y|H)p(H)}{\int p(y)}$
 
 ** Finding the integral
-
 
    * The denominator of Bayes theorem is often intractable 
    * Sampling based inference methods can be used to approximate the posterior
@@ -125,32 +124,32 @@ $p(H|y) = \frac{P(y|H)p(H)}{\int p(y)}$
      $q(\psi|\psi^\star)$ is the probability of moving from $\psi^\star$ to
      $\psi$ 
 
-** Metropolis-Hastings
+*** Metropolis-Hastings
 
-#+BEGIN_SRC Scala
-def mhStep[P](posterior: P => Double, 
-              proposal: P => Dist[P]) = { p: P =>
-  for {
-    ps <- proposal(p)
-    a = posterior(ps) - proposal(p).logPdf(ps) - 
-      posterior(p) + proposal(ps).logPdf(p)
-    u <- Dist.uniform(0, 1)
-    next = if (log(u) < a) ps else p
-  } yield next
-}
-#+END_SRC
+ #+BEGIN_SRC Scala
+ def mhStep[P](posterior: P => Double, 
+               proposal: P => Dist[P]) = { p: P =>
+   for {
+     ps <- proposal(p)
+     a = posterior(ps) - proposal(p).logPdf(ps) - 
+       posterior(p) + proposal(ps).logPdf(p)
+     u <- Dist.uniform(0, 1)
+     next = if (log(u) < a) ps else p
+   } yield next
+ }
+ #+END_SRC
 
-** Metropolis-Hastings
+*** Metropolis-Hastings
 
-#+ATTR_REVEAL: :frag (appear)
-   * Metropolis-Hastings is simple to implement and guaranteed to converge if
-     it's left long enough - but no one wants to wait forever
-   * The optimal acceptance ratio is 0.234 - most moves are rejected
-   * A random-walk proposal centered at the previous parameter is often a
-     default choice
-     $p(\psi^\star|\psi) \sim \mathcal{N}(\psi | \Sigma)$
-   * The cost of an independent sample from the stationary distribution is
-     $\mathcal{O}(d^2)$ for a $d$ dimensional parameter space
+ #+ATTR_REVEAL: :frag (appear)
+    * Metropolis-Hastings is simple to implement and guaranteed to converge if
+      it's left long enough - but no one wants to wait forever
+    * The optimal acceptance ratio is 0.234 - most moves are rejected
+    * A random-walk proposal centered at the previous parameter is often a
+      default choice
+      $p(\psi^\star|\psi) \sim \mathcal{N}(\psi | \Sigma)$
+    * The cost of an independent sample from the stationary distribution is
+      $\mathcal{O}(d^2)$ for a $d$ dimensional parameter space
 
 ** Hamiltonian Monte Carlo
 
@@ -164,85 +163,85 @@ def mhStep[P](posterior: P => Double,
    * $\boldsymbol{p}$ is the momentum, equal to $m\dot{\boldsymbol{q}}$
    * $\boldsymbol{q}$ is the particle position
 
-** Hamiltonian Monte Carlo
+*** Hamiltonian Monte Carlo
 
-#+ATTR_REVEAL: :frag (appear)
-   * The static parameters correspond to the position in Hamilton's equations,
-     the momentum is an auxiliary parameter
-   * The joint density of the parameters and momentum can be written as:
-      $p(\psi, \phi) \propto \exp \left\{ \log p(\psi|y) - \frac{1}{2}\phi^T\phi \right\}$
-   * A special discretisation of Hamilton's equations is used which exactly conserves energy called a leapfrog step
+ #+ATTR_REVEAL: :frag (appear)
+    * The static parameters correspond to the position in Hamilton's equations,
+      the momentum is an auxiliary parameter
+    * The joint density of the parameters and momentum can be written as:
+       $p(\psi, \phi) \propto \exp \left\{ \log p(\psi|y) - \frac{1}{2}\phi^T\phi \right\}$
+    * A special discretisation of Hamilton's equations is used which exactly conserves energy called a leapfrog step
 
-** The Leapfrog step
+*** The Leapfrog step
 
-   \begin{align*}
-     \phi_{t+\varepsilon/2} &= \phi_{t-1} + \frac{\varepsilon}{2} \nabla_\psi\log p(y|\psi_{t-1}), \\
-     \psi_{t+\varepsilon} &= \psi_{t-1} + \varepsilon \phi_{t+\varepsilon/2}, \\
-     \phi_{t+\varepsilon} &= \phi_{t+\varepsilon/2} + \frac{\varepsilon}{2} \nabla\log p(y|\psi_{t+\varepsilon}).
-   \end{align*}
+    \begin{align*}
+      \phi_{t+\varepsilon/2} &= \phi_{t-1} + \frac{\varepsilon}{2} \nabla_\psi\log p(y|\psi_{t-1}), \\
+      \psi_{t+\varepsilon} &= \psi_{t-1} + \varepsilon \phi_{t+\varepsilon/2}, \\
+      \phi_{t+\varepsilon} &= \phi_{t+\varepsilon/2} + \frac{\varepsilon}{2} \nabla\log p(y|\psi_{t+\varepsilon}).
+    \end{align*}
 
-** Hamiltonian Monte Carlo
+*** Hamiltonian Monte Carlo
 
-#+ATTR_REVEAL: :frag (appear)
-    * The leapfrog has a tuning parameter, the step size $\varepsilon$
-    * Only continuous distributions can be used since the un-normalised
-      log-posterior must be differentiable
-    * Non conjugate prior distributions can be used, like Metropolis-Hastings
-    * HMC is more computationally efficient, requiring $O(d^\frac{5}{4})$ for an
-      independent sample from the posterior distribution of a $d$ dimensional
-      parameter space, the optimal acceptance rate is 0.65
-    * Calculating derivatives is tedious and error-prone
+ #+ATTR_REVEAL: :frag (appear)
+     * The leapfrog has a tuning parameter, the step size $\varepsilon$
+     * Only continuous distributions can be used since the un-normalised
+       log-posterior must be differentiable
+     * Non conjugate prior distributions can be used, like Metropolis-Hastings
+     * HMC is more computationally efficient, requiring $O(d^\frac{5}{4})$ for an
+       independent sample from the posterior distribution of a $d$ dimensional
+       parameter space, the optimal acceptance rate is 0.65
+     * Calculating derivatives is tedious and error-prone
 
-** HMC algorithm in Scala
+*** HMC algorithm in Scala
 
-#+BEGIN_SRC Scala
-def step(psi: DenseVector[Double]): Rand[DenseVector[Double]] = {
-  for {
-    phi <- priorPhi
-    (propPsi, propPhi) = leapfrogs(eps, gradient, l, psi, phi)
-    a = logAcceptance(propPsi, propPhi, psi, phi, ll, priorPhi)
-    u <- Uniform(0, 1)
-    next = if (log(u) < a) {
-      propPsi
-    } else {
-      psi
-    }
-  } yield next
-}
-#+END_SRC
+ #+BEGIN_SRC Scala
+ def step(psi: DenseVector[Double]): Rand[DenseVector[Double]] = {
+   for {
+     phi <- priorPhi
+     (propPsi, propPhi) = leapfrogs(eps, gradient, l, psi, phi)
+     a = logAcceptance(propPsi, propPhi, psi, phi, ll, priorPhi)
+     u <- Uniform(0, 1)
+     next = if (log(u) < a) {
+       propPsi
+     } else {
+       psi
+     }
+   } yield next
+ }
+ #+END_SRC
 
-** The Leapfrog step
+*** The Leapfrog step
 
-#+BEGIN_SRC Scala
-def leapfrog(
-  eps: Double,
-  gradient: DenseVector[Double] => DenseVector[Double])(
-  psi: DenseVector[Double],
-  phi: DenseVector[Double]) = {
-  val p1 = phi + eps * 0.5 * gradient(psi)
-  val t1 = psi + eps * p1
-  val p2 = p1 + eps * 0.5 * gradient(t1)
-  (t1, p2)
-}
-#+END_SRC
+ #+BEGIN_SRC Scala
+ def leapfrog(
+   eps: Double,
+   gradient: DenseVector[Double] => DenseVector[Double])(
+   psi: DenseVector[Double],
+   phi: DenseVector[Double]) = {
+   val p1 = phi + eps * 0.5 * gradient(psi)
+   val t1 = psi + eps * p1
+   val p2 = p1 + eps * 0.5 * gradient(t1)
+   (t1, p2)
+ }
+ #+END_SRC
 
-** Multiple leapfrog steps
+*** Multiple leapfrog steps
 
-#+BEGIN_SRC Scala
-def leapfrogs(
-  eps: Double,
-  gradient: DenseVector[Double] => DenseVector[Double],
-  l: Int,
-  psi: DenseVector[Double],
-  phi: DenseVector[Double]) = {
-    if (l == 0) {
-      (theta, phi)
-    } else {
-      val (t, p) = leapfrog(eps, gradient, theta, phi)
-      leapfrogs(eps, gradient, l-1, t, p)
-    }
-  }
-#+END_SRC
+ #+BEGIN_SRC Scala
+ def leapfrogs(
+   eps: Double,
+   gradient: DenseVector[Double] => DenseVector[Double],
+   l: Int,
+   psi: DenseVector[Double],
+   phi: DenseVector[Double]) = {
+     if (l == 0) {
+       (theta, phi)
+     } else {
+       val (t, p) = leapfrog(eps, gradient, theta, phi)
+       leapfrogs(eps, gradient, l-1, t, p)
+     }
+   }
+ #+END_SRC
 
 ** Tuning Hamiltonian Monte Carlo
 #+ATTR_REVEAL: :frag (appear)
@@ -405,12 +404,13 @@ implicit def numericInt = new Numeric[Int] { ... }
 
 *** Natural Transformation
 
- #+CAPTION: Commutative diagram for the natural transformation laws
+ #+CAPTION: Commutative diagram for the second natural transformation
  #+NAME:   fig:figures/tikz/natural_transformation
  [[./figures/natural_transformation.png]]
 
 ** Monads
 
+#+ATTR_REVEAL: :frag (appear)
    * A monad is an endofunctor, $T: \mathcal{C} \rightarrow \mathcal{C}$ with
      two natural transformations
       * $\eta: \textrm{Id}_{\mathcal{c}} \rightarrow T$
@@ -434,7 +434,7 @@ implicit def numericInt = new Numeric[Int] { ... }
    * Verifying the correctness of programs
 
 *** Distribution is a Monad
-
+#+ATTR_REVEAL: :frag (appear)
     * A monad provides a context for an effect
     * Can preserve immutability be encapsulating random draws in a monad
       =Rand[A]= representing a distribution over the type =A=
@@ -575,6 +575,7 @@ y_i = \beta^T x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,
 *** Linear Regression
 
  #+CAPTION: Diagnostic plots for simulated data from the linear regression model
+ #+ATTR_HTML: :width 400px
  #+LABEL: mylabel
  [[./figures/ehmc_lm.png]]
 
@@ -586,6 +587,13 @@ y_i = \beta^T x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,
 y_t &= \sigma_t\exp\left(\frac{\alpha_t}{2}\right), &\sigma_t &\sim \mathcal{N}(0, 1), \\
 \textrm{d}\alpha_t &= \phi(\alpha_t - \mu)\textrm{d}t + \sigma \textrm{d}W_t.
 \end{align}
+
+*** Stochastic Volatility
+
+ #+CAPTION: Simulation from a stochastic volatility model with Ornstein-Uhlenbeck latent-state
+ #+ATTR_HTML: :width 400px
+ #+NAME:   fig:sv_model
+[[./figures/sv_ou_sims.png]]
 
 *** Stochastic Volatility
 
@@ -605,6 +613,7 @@ def ouStep(phi: Real, mu: Real, sigma: Real, x0: Real, dt: Double) = {
   Normal(mean, variance.pow(0.5))
 }
 #+END_SRC
+
 
 *** Stochastic Volatility
 
@@ -632,6 +641,12 @@ val fullModel = ys.foldLeft(prior)(step)
 
 *** Mixture Model
 
+ #+CAPTION: 500 Simulations from a mixture model with $\theta = \{0.3, 0.2, 0.5\}$ and $\mu = \{-2.0, 1.0, 3.0\}$, $\sigma = 0.5$
+ #+NAME:   fig:mixture-model
+[[./figures/mixture_model.png]]
+
+*** Mixture Model 
+
 #+BEGIN_SRC scala
 val model = for {
   theta1 <- Beta(2.0, 5.0).param
@@ -652,8 +667,15 @@ val model = for {
 
 #+END_SRC
 
-* Conclusion
+*** Mixture Model
 
+ #+CAPTION: Posterior Densities for the parameters in the mixture model
+ #+ATTR_HTML: :width 400px
+ #+NAME:   fig:figures/tikz/natural_transformation
+[[./figures/mixture_model_posterior.png]]
+
+* Conclusion
+#+ATTR_REVEAL: :frag (appear)
   * Probabilistic programming languages can be used to quickly
     prototype new models without implementing and testing new inference schemes
   * Embedded PPLs can be deployed in production code without rewriting -
